@@ -1,0 +1,56 @@
+
+
+#####  DOCKER COMMANDS #########
+docker build -t drehnstrom/pi-calc:v1.0 .
+
+# Run Docker image on Cloud Shell  
+docker run -d -p 8080:8080 drehnstrom/pi-calc:v1.0
+
+#To find out status of containers
+docker ps
+
+#To stop container
+docker stop <container-id-here>
+
+# To Push, first log into docker
+docker login
+
+#To Push to Docker Hub
+docker push drehnstrom/pi-calc:v1.0
+
+# GCP Container Builder to build Docker image
+gcloud builds submit --tag gcr.io/$GOOGLE_CLOUD_PROJECT/drehnstrom/pi-calc:v1.0 .
+
+# Pull the container for the GCP Container Registry
+gcloud docker -- pull gcr.io/$GOOGLE_CLOUD_PROJECT/drehnstrom/pi-calc:v1.0
+
+# Run Docker image on local machine 
+docker run -d -p 8080:8080 gcr.io/$GOOGLE_CLOUD_PROJECT/drehnstrom/pi-calc:v1.0
+
+Kubernetes Commands
+# Create a cluster in specified project - uses all the defaults
+gcloud container clusters create pi-cluster --zone=us-central1-a --project=$GOOGLE_CLOUD_PROJECT
+
+
+#  Get authorization to the Cluster
+gcloud container clusters get-credentials pi-cluster --zone=us-central1-a --project=$GOOGLE_CLOUD_PROJECT
+
+
+# Deploys the container based on YAML configuration
+kubectl apply -f kubernetes-config.yaml
+
+
+# To delete the service created by previous command
+kubectl delete -f kubernetes-config.yaml
+
+# Delete the Cluster
+gcloud container clusters delete pi-cluster --zone=us-central1-a --project=$GOOGLE_CLOUD_PROJECT
+
+
+
+### App Engine Commands
+gcloud app create --region=us-central
+gcloud app deploy --version one
+
+
+

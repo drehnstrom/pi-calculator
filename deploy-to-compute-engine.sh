@@ -22,4 +22,8 @@ gcloud compute url-maps create web-map-http --default-service=web-backend-servic
 gcloud compute target-http-proxies create http-proxy --url-map=web-map-http
 gcloud compute forwarding-rules create http-content-rule  --global --target-http-proxy=http-proxy --ports=80
 
+echo "Creating Firewall rule..."
+gcloud compute firewall-rules create default-allow-http --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:80 --source-ranges=0.0.0.0/0 --target-tags=http-server
+
+
 echo "Done"

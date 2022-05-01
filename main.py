@@ -3,7 +3,6 @@ import os
 
 app = Flask(__name__)
 
-
 @app.route("/")
 def main():
     pi = getpi()
@@ -15,14 +14,14 @@ def getpi():
     s = 0
     for i in range(1000000):
 	    # even index elements are positive
-	    if i % 2 == 0:
-		    s += 4/k
-	    else:
+        if i % 2 == 0:
+            s += 4/k
+        else:
 		    # odd index elements are negative
-		    s -= 4/k
+            s -= 4/k
 	    # denominator is odd
-	    k += 2
-	
+        k += 2
+
     return s
     
 

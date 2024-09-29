@@ -44,7 +44,7 @@ spec:
     app: picalc
  
 ---
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: picalc-deployment-autoscaler
@@ -59,6 +59,8 @@ spec:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization: 60
+      target:
+        type: Utilization
+        averageUtilization: 60
       
       

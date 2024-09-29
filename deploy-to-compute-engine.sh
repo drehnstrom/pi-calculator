@@ -12,10 +12,12 @@ gcloud beta compute instance-groups managed create pi-group --base-instance-name
 
 echo "Setting Autoscaling Rules..."
 gcloud beta compute instance-groups managed set-autoscaling "pi-group" --zone=us-central1-a --cool-down-period=60 --max-num-replicas=5 --min-num-replicas=1 --target-cpu-utilization "0.75" --mode "on"
+sleep 30
 
 echo "Creating Backend Service..."
 gcloud compute backend-services create web-backend-service --protocol=HTTP --port-name=http  --health-checks=pi-health-check --global
 gcloud compute backend-services add-backend web-backend-service --instance-group=pi-group --instance-group-zone=us-central1-a --global
+sleep 30
 
 echo "Creating Load Balancer..."
 gcloud compute url-maps create web-map-http --default-service=web-backend-service
